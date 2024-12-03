@@ -4,6 +4,7 @@ COPY backend/ .
 RUN mvn clean package -DskipTests
 
 FROM openjdk:21-jdk-slim
-COPY --from=build /backend/target/*.jar /app/demo.jar
+WORKDIR /app
+COPY --from=build /backend/target/*.jar /app/application.jar
 EXPOSE 8080
-ENTRYPOINT [ "java"."-jar","demo.jar" ]
+ENTRYPOINT ["java", "-jar", "application.jar"]
